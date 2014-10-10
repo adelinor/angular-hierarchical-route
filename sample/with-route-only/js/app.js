@@ -1,20 +1,12 @@
+/** App */
 angular.module('sample',[
                       	'sample.controllers',
+                      	'sample.services',
                     	'sample.routes',
                     	'ui.bootstrap'
                     	]);
 
-//To be included later
-//'sample.services',
-
-angular.module('sample.controllers',[])
-.controller('AppCtrl', ['$scope', function($scope) {
-	
-	//TODO
-	
-}]);
-
-
+/** Routes */
 angular.module('sample.routes', ['ngRoute'])
 .config(['$routeProvider', function($routeProvider) {
 
