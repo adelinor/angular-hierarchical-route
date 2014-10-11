@@ -14,7 +14,10 @@
 	    </div>
 	</div>
 
-	<div ng-show="errorMessage">
+	<div class="alert alert-success" role="alert" ng-show="successMessage">
+		{{successMessage}}
+	</div>
+	<div class="alert alert-danger" role="alert" ng-show="errorMessage">
 		{{errorMessage}}
 	</div>
 	
