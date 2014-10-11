@@ -12,4 +12,4 @@ To run sample, go to the `/sample` folder and run command:
 python -m SimpleHTTPServer 8888
 ```
 
-Go then to [http://localhost:8888/with-route-only]
+Go then to [http://localhost:8888/with-route-only](http://localhost:8888/with-route-only)
