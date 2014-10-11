@@ -11,7 +11,7 @@ angular.module('sample.routes', ['ngRoute'])
 .config(['$routeProvider', function($routeProvider) {
 
 	$routeProvider.when('/home', {templateUrl: 'home/home.html', controller: 'AppCtrl'});
-	$routeProvider.when('/admin', {templateUrl: 'admin/admin.html', controller: 'AppCtrl'});
+	$routeProvider.when('/admin', {templateUrl: 'admin/admin.html', controller: 'AdminCityCtrl'});
 	$routeProvider.when('/about', {templateUrl: 'about/about.html', controller: 'AppCtrl'});
 	$routeProvider.otherwise({redirectTo: '/home'});
 

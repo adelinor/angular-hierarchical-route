@@ -11,4 +11,19 @@ angular.module('sample.controllers',[])
 	});
 
 	
+}])
+.controller('AdminCityCtrl', ['$scope', 'adminService', function($scope, adminService) {
+	$scope.cities = [];
+	
+	$scope.add = function() {
+		$scope.errorMessage = undefined;
+		adminService.findCityByName($scope.searchName)
+		.then(function(data) {
+			if (! data) {
+				$scope.errorMessage = "Could not find a city with name '" + $scope.searchName + "";
+			} else {
+				$scope.cities.push(data);
+			}
+		});
+	};
 }]);
