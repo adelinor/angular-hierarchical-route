@@ -3,15 +3,26 @@
 </div>
 <p class="lead">
 <form role="form" ng-submit="add()">
-	<div class="form-group">
-		<label for="citySearch">City name</label>
-		<div class="input-group">
-			<input type="name" class="form-control" id="citySearch"
-				ng-model="searchName">
-			<span class="input-group-btn">
-				<button class="btn btn-default" type="submit">Add</button>
-			</span>
-	    </div>
+	<div class="row">
+		<div class="form-group col-xs-3">
+			<label for="citySearch">Country</label>
+			<select class="form-control"
+				ng-model="country"
+			    ng-options="c as c.name for c in countries | orderBy:'name'">
+			</select>
+		</div>
+		<div class="form-group col-xs-5">
+			<label for="citySearch">City name</label>
+			<div class="input-group">
+				<input type="text" class="form-control" id="citySearch"
+					ng-model="searchName"
+					ng-disabled="(!country)">
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="submit"
+						ng-disabled="(!country)">Add</button>
+				</span>
+		    </div>
+		</div>
 	</div>
 
 	<div class="alert alert-success" role="alert" ng-show="successMessage">
