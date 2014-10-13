@@ -12,6 +12,11 @@ angular.module('sample.controllers',[])
 		$scope.countries = data;
 	});
 	
+	//Load existing cities
+	adminService.allCities()
+	.then(function(data) {
+		$scope.cities = data.cities;
+	});
 	
 	$scope.add = function() {
 		$scope.errorMessage = undefined;

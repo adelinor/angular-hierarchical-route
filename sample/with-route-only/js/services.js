@@ -293,8 +293,15 @@ angular.module('sample.services',[])
 		});
 	};
 	
-	/** Cities are held in memory */
-	var cities = [];
+	/** Cities are held in memory. Initializing with a couple of cities */
+	var cities = [
+		{name: "Paris", country: "FR", id: 2988507},
+		{name: "Toulouse", country: "FR", id: 2972315},
+		{name: "Berlin", country: "DE", id: 2950159},
+		{name: "Munich", country: "DE", id: 2867714},
+		{name: "London", country: "GB", id: 2643743},
+		{name: "Basingstoke", country: "GB", id: 2656192}
+	];
 
 	/**
 	 * @returns Promise which paramater of successful function
