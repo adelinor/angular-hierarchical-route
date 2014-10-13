@@ -295,21 +295,15 @@ angular.module('sample.services',[])
 	
 	/** Cities are held in memory */
 	var cities = [];
-	
+
 	/**
-	 * @returns Promise which parameter of successful function
-	 * is the updated list of cities
+	 * @returns Promise which paramater of successful function
+	 *          is an object with properties:
+	 *          - countryMap : country code to country name
+	 *          - cities : array of city objects
+	 *          - byCountry : country code to array of cities
 	 */
-	var addCityFn = function(city) {
-		var present = (! city);
-		for (var i = 0; (! present) && i < cities.length; i++) {
-			if (cities[i].id === city.id) {
-				present = cities[i];
-			}
-		}
-		if (! present) {
-			cities.push(city);
-		}
+	var allCitiesFn = function() {
 		return allCountriesFn()
 		.then(function(countries) {
 			var countryMap = {};
@@ -332,11 +326,29 @@ angular.module('sample.services',[])
 			};
 		});
 	};
+
+	/**
+	 * @returns Promise which parameter of successful function
+	 * is the updated list of cities
+	 */
+	var addCityFn = function(city) {
+		var present = (! city);
+		for (var i = 0; (! present) && i < cities.length; i++) {
+			if (cities[i].id === city.id) {
+				present = cities[i];
+			}
+		}
+		if (! present) {
+			cities.push(city);
+		}
+		return allCitiesFn();
+	};
 	
 	return {
 		findCityByName: findCityByNameFn,
 		addCity: addCityFn,
-		allCountries: allCountriesFn
+		allCountries: allCountriesFn,
+		allCities: allCitiesFn
 	};
 	//TODO
 	
