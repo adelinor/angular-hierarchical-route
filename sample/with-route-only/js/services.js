@@ -309,8 +309,28 @@ angular.module('sample.services',[])
 		}
 		if (! present) {
 			cities.push(city);
-		}		
-		return toPromise(cities);
+		}
+		return allCountriesFn()
+		.then(function(countries) {
+			var countryMap = {};
+			angular.forEach(countries, function(c) {
+				countryMap[c.code] = c.name;
+			});
+
+			var byCountry = {};
+			angular.forEach(cities, function(l) {
+				var citiesForCountry = byCountry[l];
+				if (! citiesForCountry) {
+					citiesForCountry = byCountry[l] = [];
+				}
+				citiesForCountry.push(l);
+			});
+			return {
+				countryMap: countryMap,
+				byCountry: byCountry,
+				cities: cities
+			};
+		});
 	};
 	
 	return {

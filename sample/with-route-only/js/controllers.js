@@ -26,8 +26,8 @@ angular.module('sample.controllers',[])
 			}
 			return adminService.addCity(data);
 		})
-		.then(function(cities) {
-			$scope.cities = cities;
+		.then(function(data) {
+			$scope.cities = data.cities;
 		});
 	};
 }]);
