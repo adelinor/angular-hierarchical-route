@@ -1,7 +1,9 @@
 angular.module('sample.controllers',[])
-.controller('AppCtrl', ['$scope', 'adminService', function($scope, adminService) {
+.controller('AppCtrl', ['$scope', '$location', 'adminService', function($scope, $location, adminService) {
 	
-	//TODO
+	$scope.whenPath = function(pathToCheck) {
+		return $location.path().slice(0, pathToCheck.length) === pathToCheck;
+	};
 	
 }])
 .controller('AdminCityCtrl', ['$scope', 'adminService', function($scope, adminService) {
