@@ -1,1 +1,32 @@
-This is HOME
+<div class="page-header">
+	<h1>Weather forecast</h1>
+</div>
+<div class="col-xs-4">
+<p class="lead">
+
+	Choose a country
+	<select class="form-control"
+		ng-model="country"
+		ng-options="country as countryMap[country] for (country , value) in byCountry">
+	</select>
+	
+	Choose a city
+	<select class="form-control"
+		ng-model="cityId"
+		ng-options="city.id as city.name for city in byCountry[country]"
+		ng-disabled="(! country)">
+	</select>
+</p>
+</div>
+<div class="col-xs-6">
+<p ng-show="cityId">
+	<h2>{{forecast.name}}</h2>
+	<img ng-src="{{forecast.iconUrl}}">
+	{{forecast.temp}} degrees<br>
+	{{forecast.description}}<br>
+	{{forecast.humidity}}% of humidity
+	
+The forecast is kindly enabled by the <a href="http://openweathermap.org/current">Open weather API</a>
+</p>
+</div>
+

@@ -1,10 +1,31 @@
 angular.module('sample.controllers',[])
-.controller('AppCtrl', ['$scope', '$location', 'adminService', function($scope, $location, adminService) {
+.controller('AppCtrl', ['$scope', '$location', function($scope, $location) {
 	
 	$scope.whenPath = function(pathToCheck) {
 		return $location.path().slice(0, pathToCheck.length) === pathToCheck;
 	};
+
+}])
+.controller('HomeCtrl', ['$scope', 'adminService', 'weatherService', function($scope, adminService, weatherService) {
 	
+	//Load existing cities
+	adminService.allCities()
+	.then(function(data) {
+		$scope.cities = data.cities;
+		$scope.countryMap = data.countryMap;
+		$scope.byCountry = data.byCountry;
+	});
+
+	//Watch for city selection and query weather accordingly
+	$scope.$watch('cityId', function(newId, oldId) {
+		
+		if (newId && (newId !== oldId)) {
+			weatherService.forecast(newId)
+			.then(function(data) {
+				$scope.forecast = data;
+			});
+		}
+	});
 }])
 .controller('AdminCityCtrl', ['$scope', 'adminService', function($scope, adminService) {
 	

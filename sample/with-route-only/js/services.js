@@ -320,9 +320,9 @@ angular.module('sample.services',[])
 
 			var byCountry = {};
 			angular.forEach(cities, function(l) {
-				var citiesForCountry = byCountry[l];
+				var citiesForCountry = byCountry[l.country];
 				if (! citiesForCountry) {
-					citiesForCountry = byCountry[l] = [];
+					citiesForCountry = byCountry[l.country] = [];
 				}
 				citiesForCountry.push(l);
 			});
@@ -356,8 +356,27 @@ angular.module('sample.services',[])
 		addCity: addCityFn,
 		allCountries: allCountriesFn,
 		allCities: allCitiesFn
+	};	
+}])
+.service('weatherService', ['$http', function($http) {
+
+	var forecastFn = function(cityId) {
+		return $http.get('http://api.openweathermap.org/data/2.5/weather',
+				{params: {id: cityId}})
+		.then(function(httpResponse) {
+			var data = httpResponse.data;
+			return {
+				name: data.name,
+				temp: data.main.temp - 273.15,
+				humidity: data.main.humidity,
+				description: data.weather[0].description,
+				iconUrl: 'http://openweathermap.org/img/w/'+ data.weather[0].icon + '.png'
+			};
+		});
 	};
-	//TODO
-	
+
+	return {
+		forecast: forecastFn
+	};
 }]);
 
