@@ -369,9 +369,10 @@ angular.module('sample.services',[])
 				name: data.name,
 				temp: data.main.temp - 273.15,
 				humidity: data.main.humidity,
+				main: data.weather[0].main,
 				description: data.weather[0].description,
 				iconUrl: 'http://openweathermap.org/img/w/'+ data.weather[0].icon + '.png'
-			};
+			};	
 		});
 	};
 
