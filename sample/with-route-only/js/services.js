@@ -360,23 +360,42 @@ angular.module('sample.services',[])
 }])
 .service('weatherService', ['$http', function($http) {
 
-	var forecastFn = function(cityId) {
+	var toWeatherItem = function(data) {
+		var dt = (data.dt_txt)?data.dt_txt.replace(' ','T'):undefined;
+		return {
+			name: data.name,
+			date: dt,
+			temp: data.main.temp - 273.15,
+			humidity: data.main.humidity,
+			main: data.weather[0].main,
+			description: data.weather[0].description,
+			iconUrl: 'http://openweathermap.org/img/w/'+ data.weather[0].icon + '.png'
+		};	
+	};
+
+	var currentFn = function(cityId) {
 		return $http.get('http://api.openweathermap.org/data/2.5/weather',
 				{params: {id: cityId}})
 		.then(function(httpResponse) {
-			var data = httpResponse.data;
-			return {
-				name: data.name,
-				temp: data.main.temp - 273.15,
-				humidity: data.main.humidity,
-				main: data.weather[0].main,
-				description: data.weather[0].description,
-				iconUrl: 'http://openweathermap.org/img/w/'+ data.weather[0].icon + '.png'
-			};	
+			return toWeatherItem(httpResponse.data);	
+		});
+	};
+
+	var forecastFn = function(cityId) {
+		return $http.get('http://api.openweathermap.org/data/2.5/forecast',
+				{params: {id: cityId}})
+		.then(function(httpResponse) {
+			var result; result = [];
+			var data = httpResponse.data.list;
+			for (var i = 0; i < data.length && i < 17; i++) {
+				result.push(toWeatherItem(data[i]));
+			}
+			return result;
 		});
 	};
 
 	return {
+		current: currentFn,
 		forecast: forecastFn
 	};
 }]);

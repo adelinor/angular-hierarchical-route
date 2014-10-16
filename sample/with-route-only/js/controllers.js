@@ -8,6 +8,31 @@ angular.module('sample.controllers',[])
 }])
 .controller('HomeCtrl', ['$scope', 'adminService', 'weatherService', function($scope, adminService, weatherService) {
 	
+	//Mode: current or forecast
+	$scope.forecastMode = false;
+
+	//Load weather function
+	var loadWeatherFn = function(cityId) {
+		if ($scope.forecastMode) {
+			weatherService.forecast(cityId)
+			.then(function(data) {
+				$scope.forecasts = data;
+			});
+			
+		} else {
+			weatherService.current(cityId)
+			.then(function(data) {
+				$scope.forecast = data;
+			});
+		}		
+	};
+	
+	//Update mode
+	$scope.toggleMode = function() {
+		$scope.forecastMode = !$scope.forecastMode;
+		loadWeatherFn($scope.cityId);
+	};
+	
 	//Load existing cities
 	adminService.allCities()
 	.then(function(data) {
@@ -20,10 +45,7 @@ angular.module('sample.controllers',[])
 	$scope.$watch('cityId', function(newId, oldId) {
 		
 		if (newId && (newId !== oldId)) {
-			weatherService.forecast(newId)
-			.then(function(data) {
-				$scope.forecast = data;
-			});
+			loadWeatherFn(newId);
 		}
 	});
 }])
