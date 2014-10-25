@@ -33,12 +33,20 @@ angular.module('sample.controllers',[])
 		loadWeatherFn($scope.cityId);
 	};
 	
-	//Load existing cities
-	adminService.allCities()
+	//Load existing countries
+	adminService.countries()
 	.then(function(data) {
-		$scope.cities = data.cities;
-		$scope.countryMap = data.countryMap;
-		$scope.byCountry = data.byCountry;
+		$scope.countries = data;
+	});
+
+	//Watch for country selection and query cities accordingly
+	$scope.$watch('countryId', function(newId, oldId) {
+		if (newId && (newId !== oldId)) {
+			adminService.citiesForCountry(newId)
+			.then(function(data) {
+				$scope.cities = data;
+			});
+		}
 	});
 
 	//Watch for city selection and query weather accordingly
@@ -58,9 +66,9 @@ angular.module('sample.controllers',[])
 	});
 	
 	//Load existing cities
-	adminService.allCities()
+	adminService.cities()
 	.then(function(data) {
-		$scope.cities = data.cities;
+		$scope.cities = data;
 	});
 	
 	$scope.add = function() {
@@ -77,7 +85,7 @@ angular.module('sample.controllers',[])
 			return adminService.addCity(data);
 		})
 		.then(function(data) {
-			$scope.cities = data.cities;
+			$scope.cities = data;
 		});
 	};
 }]);

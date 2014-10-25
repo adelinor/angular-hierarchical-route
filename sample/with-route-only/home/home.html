@@ -8,15 +8,15 @@
 <div class="col-xs-4 lead">
 	Choose a country
 	<select class="form-control"
-		ng-model="country"
-		ng-options="country as countryMap[country] for (country , value) in byCountry">
+		ng-model="countryId"
+		ng-options="c.code as c.name for c in countries">
 	</select>
 	
 	Choose a city
 	<select class="form-control"
 		ng-model="cityId"
-		ng-options="city.id as city.name for city in byCountry[country]"
-		ng-disabled="(! country)">
+		ng-options="city.id as city.name for city in cities"
+		ng-disabled="(! countryId)">
 	</select>
 	
 	<button type="button" class="btn btn-link btn-sm"
