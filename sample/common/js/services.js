@@ -304,9 +304,9 @@ angular.module('sample.services',[])
 	];
 
 	/**
-	 * @returns Promise which paramater of successful function
+	 * @returns Promise which parameter of successful function
 	 *          is an object with properties:
-	 *          - countryMap : country code to country name
+	 *          - countryMap : country code to country object
 	 *          - cities : array of city objects
 	 *          - byCountry : country code to array of cities
 	 */
@@ -315,7 +315,7 @@ angular.module('sample.services',[])
 		.then(function(countries) {
 			var countryMap = {};
 			angular.forEach(countries, function(c) {
-				countryMap[c.code] = c.name;
+				countryMap[c.code] = c;
 			});
 
 			var byCountry = {};
@@ -336,6 +336,45 @@ angular.module('sample.services',[])
 
 	/**
 	 * @returns Promise which parameter of successful function
+	 *          is an array of country objects which have a city
+	 *          recorded against them
+	 */
+	var countriesFn = function() {
+		return allCitiesFn()
+		.then(function(allCities) {
+			var result; result = [];
+
+			for (var code in allCities.byCountry) {
+				result.push(allCities.countryMap[code]);
+			}
+			return result;
+		});
+	};
+
+	/**
+	 * @returns Promise which parameter of successful function
+	 *          is an array of city objects
+	 */
+	var citiesFn = function() {
+		return allCitiesFn()
+		.then(function(allCities) {
+			return allCities.cities;
+		});
+	};
+
+	/**
+	 * @returns Promise which parameter of successful function
+	 *          is an array of city objects
+	 */
+	var citiesForCountryFn = function(countryCode) {
+		return allCitiesFn()
+		.then(function(allCities) {
+			return allCities.byCountry[countryCode];
+		});
+	};
+
+	/**
+	 * @returns Promise which parameter of successful function
 	 * is the updated list of cities
 	 */
 	var addCityFn = function(city) {
@@ -348,14 +387,16 @@ angular.module('sample.services',[])
 		if (! present) {
 			cities.push(city);
 		}
-		return allCitiesFn();
+		return citiesFn();
 	};
-	
+
 	return {
 		findCityByName: findCityByNameFn,
 		addCity: addCityFn,
 		allCountries: allCountriesFn,
-		allCities: allCitiesFn
+		cities: citiesFn,
+		countries: countriesFn,
+		citiesForCountry: citiesForCountryFn
 	};	
 }])
 .service('weatherService', ['$http', function($http) {
