@@ -10,24 +10,31 @@ angular.module('sample',[
 /** Routes */
 angular.module('sample.routes', ['ngRoute', 'angularHierarchicalRoute'])
 .config(['$routeProvider', 'hierarchyProvider', function($routeProvider, hierarchyProvider) {
-
-	//Annotated allCities function
-	var citiesFn = ['adminService', function(adminService) {
-		return adminService.cities();
-	}];
 	
 	/** Home */
+	//Annotated functions used for home
+	var annotatedFnCountries = ['adminService', function(adminService) {
+		return adminService.countries();
+	}];
+	var annotatedFnCities = ['adminService', '$route', function(adminService, $route) {
+		//NDLA: $routeParams only provides the route parameters after the route is 
+		//      successfully changed.
+		//      See https://docs.angularjs.org/api/ngRoute/service/$routeParams
+		return adminService.citiesForCountry($route.current.params.countryId);
+	}];
+
 	hierarchyProvider.add({
 		rootPath: '/home',
 		templateUrl: 'home/home.html',
 		controller: 'HomeCtrl'})
 	.callableFrom('/home','home')
 		.resolve({
-			cities: citiesFn
+			countries: annotatedFnCountries
 		})
-	.callableFrom('/home/:countryCode','country')
+	.callableFrom('/home/:countryId','country')
 		.resolve({
-			cities: citiesFn
+			countries: annotatedFnCountries,
+			cities: annotatedFnCities
 		})
 //	.callableFrom('/home/:countryCode/:cityId','city')
 //		.resolve({
@@ -57,7 +64,5 @@ angular.module('sample.routes', ['ngRoute', 'angularHierarchicalRoute'])
 	$routeProvider.when('/admin', {templateUrl: '../common/admin/admin.html', controller: 'AdminCityCtrl'});
 	$routeProvider.when('/about', {templateUrl: '../common/about/about.html', controller: 'AppCtrl'});
 	$routeProvider.otherwise({redirectTo: '/home'});
-	
-//	hierarchyProvider.sayHello();
 
 }]);

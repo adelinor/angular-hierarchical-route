@@ -119,6 +119,7 @@ function HierarchyProvider() {
 	
 	Hierarchy.prototype = {
 		callableFrom: function(path, logicalName) {
+			var self = this;
 			var c = {
 				path: path,
 				logicalName: logicalName
@@ -130,14 +131,14 @@ function HierarchyProvider() {
 						return nameToCheck === logicalName;
 					},
 					goToFirstWith: function(params) {
-						return goToFirstWithFn(paths, new ParameterMap(params), $location);
+						return goToFirstWithFn(self.callablePaths, new ParameterMap(params), $location);
 					},
 					updateOrGoToFirstWith: function(params) {
-						return updateOrGoToFirstWithFn(paths, new ParameterMap(params),
+						return updateOrGoToFirstWithFn(self.callablePaths, new ParameterMap(params),
 								$location, $route, new ParameterMap($routeParams));
 					},
 					goTo: function(name, params) {
-						return goToFn(name, paths, new ParameterMap(params), $location);
+						return goToFn(name, self.callablePaths, new ParameterMap(params), $location);
 					},
 					$routeParams: $routeParams,
 					$route: $route,

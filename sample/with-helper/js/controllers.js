@@ -6,7 +6,18 @@ angular.module('sample.controllers',[])
 	};
 
 }])
-.controller('HomeCtrl', ['$scope', 'adminService', 'weatherService', function($scope, adminService, weatherService) {
+.controller('HomeCtrl', ['$scope', 'weatherService', 'resolved', 'routeCalled',
+                         function($scope, weatherService, resolved, routeCalled) {
+	//NDLA: with pure ng-route, you need to inject all the resolved objects and
+	//      route contextual information: countries, cities, $route, $location
+	
+	//Set loaded data in scope
+	$scope.countries = resolved.countries;
+	$scope.cities = resolved.cities; //NDLA: this will be undefined in some cases
+
+	//Set scope data bound to route parameters
+	$scope.countryId = routeCalled.$routeParams.countryId;
+	$scope.cityId = routeCalled.$routeParams.cityId;
 	
 	//Mode: current or forecast
 	$scope.forecastMode = false;
@@ -33,19 +44,10 @@ angular.module('sample.controllers',[])
 		loadWeatherFn($scope.cityId);
 	};
 	
-	//Load existing countries
-	adminService.countries()
-	.then(function(data) {
-		$scope.countries = data;
-	});
-
 	//Watch for country selection and query cities accordingly
 	$scope.$watch('countryId', function(newId, oldId) {
 		if (newId && (newId !== oldId)) {
-			adminService.citiesForCountry(newId)
-			.then(function(data) {
-				$scope.cities = data;
-			});
+			routeCalled.goToFirstWith({countryId: newId});
 		}
 	});
 
