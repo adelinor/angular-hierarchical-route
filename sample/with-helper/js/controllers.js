@@ -6,7 +6,20 @@ angular.module('sample.controllers',[])
 	};
 
 }])
-.controller('HomeCtrl', ['$scope', 'adminService', 'weatherService', function($scope, adminService, weatherService) {
+.controller('HomeCtrl', ['$scope', 'weatherService', 'resolved', 'routeCalled',
+                         function($scope, weatherService, resolved, routeCalled) {
+	//NDLA: with pure ng-route, you need to inject all the resolved objects and
+	//      route contextual information: countries, cities, $route, $location
+	
+	//Set loaded data in scope
+	$scope.countries = resolved.countries;
+	$scope.cities = resolved.cities; //NDLA: this will be undefined in some cases
+	$scope.forecast = resolved.currentWeather;
+
+	//Set scope data bound to route parameters
+	$scope.countryId = routeCalled.$routeParams.countryId;
+	var id = routeCalled.$routeParams.cityId;
+	$scope.cityId = (id)? Number(id) : undefined;
 	
 	//Mode: current or forecast
 	$scope.forecastMode = false;
@@ -33,19 +46,10 @@ angular.module('sample.controllers',[])
 		loadWeatherFn($scope.cityId);
 	};
 	
-	//Load existing countries
-	adminService.countries()
-	.then(function(data) {
-		$scope.countries = data;
-	});
-
 	//Watch for country selection and query cities accordingly
 	$scope.$watch('countryId', function(newId, oldId) {
 		if (newId && (newId !== oldId)) {
-			adminService.citiesForCountry(newId)
-			.then(function(data) {
-				$scope.cities = data;
-			});
+			routeCalled.goToFirstWith({countryId: newId});
 		}
 	});
 
@@ -53,7 +57,9 @@ angular.module('sample.controllers',[])
 	$scope.$watch('cityId', function(newId, oldId) {
 		
 		if (newId && (newId !== oldId)) {
-			loadWeatherFn(newId);
+			//NDLA: updateOrGoToFirstWith allows to both navigate from
+			//      path[n-1] to path[n] or update paramaters within path[n]
+			routeCalled.updateOrGoToFirstWith({countryId: $scope.countryId, cityId: newId});
 		}
 	});
 }])

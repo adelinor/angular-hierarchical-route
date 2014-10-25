@@ -16,7 +16,7 @@
 	<select class="form-control"
 		ng-model="cityId"
 		ng-options="city.id as city.name for city in cities"
-		ng-disabled="! (cities.length > 0)">
+		ng-disabled="! (cities.length > 0)"><!-- NDLA: Cities is safely refreshed when country changes -->
 	</select>
 	
 	<button type="button" class="btn btn-link btn-sm"
