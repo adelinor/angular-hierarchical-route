@@ -1,5 +1,5 @@
 /**
- * angular-hierarchical-route v0.0.1
+ * angular-hierarchical-route v0.1-SNAPSHOT
  * https://github.com/adelinor/angular-hierarchical-route
  */
 (function(window, angular, undefined) {'use strict';
