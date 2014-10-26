@@ -15,35 +15,24 @@ angular.module('sample.controllers',[])
 	$scope.countries = resolved.countries;
 	$scope.cities = resolved.cities; //NDLA: this will be undefined in some cases
 	$scope.forecast = resolved.currentWeather;
+	$scope.forecasts = resolved.forecastWeather;
 
 	//Set scope data bound to route parameters
 	$scope.countryId = routeCalled.$routeParams.countryId;
 	var id = routeCalled.$routeParams.cityId;
 	$scope.cityId = (id)? Number(id) : undefined;
-	
-	//Mode: current or forecast
-	$scope.forecastMode = false;
-
-	//Load weather function
-	var loadWeatherFn = function(cityId) {
-		if ($scope.forecastMode) {
-			weatherService.forecast(cityId)
-			.then(function(data) {
-				$scope.forecasts = data;
-			});
-			
-		} else {
-			weatherService.current(cityId)
-			.then(function(data) {
-				$scope.forecast = data;
-			});
-		}		
-	};
+	$scope.forecastMode = routeCalled.isActive('forecast');
 	
 	//Update mode
 	$scope.toggleMode = function() {
-		$scope.forecastMode = !$scope.forecastMode;
-		loadWeatherFn($scope.cityId);
+		var params = {countryId: $scope.countryId, cityId: $scope.cityId};
+		if ($scope.forecastMode) {
+			routeCalled.goTo('current', params);
+
+		} else {
+			routeCalled.goTo('forecast', params);
+			
+		}
 	};
 	
 	//Watch for country selection and query cities accordingly

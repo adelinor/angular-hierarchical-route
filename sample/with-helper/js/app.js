@@ -36,7 +36,7 @@ angular.module('sample.routes', ['ngRoute', 'angularHierarchicalRoute'])
 			countries: annotatedFnCountries,
 			cities: annotatedFnCities
 		})
-	.callableFrom('/home/:countryId/:cityId','city')
+	.callableFrom('/home/:countryId/:cityId','current')
 		.resolve({
 			countries: annotatedFnCountries,
 			cities: annotatedFnCities,
@@ -48,18 +48,19 @@ angular.module('sample.routes', ['ngRoute', 'angularHierarchicalRoute'])
 				return undefined;
 			}]
 		})
-//	.callableFrom('/home/:countryCode/:cityId/forecast','forecast')
-//		.resolve({
-//			cities: citiesFn,
-//			forecastWeather: ['weatherService', '$route', function(weatherService, $route) {
-//				var cityId = $route.current.params['cityId'];
-//				if (cityId) {
-//					return weatherService.forecast(cityId);
-//				}
-//				return undefined;
-//			}]
-//		})
-		.registerWith($routeProvider);
+	.callableFrom('/home/:countryId/:cityId/forecast','forecast')
+		.resolve({
+			countries: annotatedFnCountries,
+			cities: annotatedFnCities,
+			forecastWeather: ['weatherService', '$route', function(weatherService, $route) {
+				var cityId = $route.current.params['cityId'];
+				if (cityId) {
+					return weatherService.forecast(cityId);
+				}
+				return undefined;
+			}]
+		})
+	.registerWith($routeProvider);
 
 	$routeProvider.when('/admin', {templateUrl: '../common/admin/admin.html', controller: 'AdminCityCtrl'});
 	$routeProvider.when('/about', {templateUrl: '../common/about/about.html', controller: 'AppCtrl'});
