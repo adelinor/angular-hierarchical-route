@@ -11,7 +11,7 @@ This project includes two sample applications:
   could also be implemented with plain `ngRoute` with some trade-offs*.
 
 How to run samples
------------------
+------------------
 To run sample, go to the `/sample` folder and run command:
 
 ```sh
