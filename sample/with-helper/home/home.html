@@ -1,0 +1,27 @@
+<div class="page-header">
+	<h1>{{(forecastMode)?'Weather forecast':'Current weather'}}</h1>
+</div>
+<p class="lead">
+	All weather information is kindly enabled by the
+	<a href="http://openweathermap.org/current">Open weather API</a>
+</p>
+<div class="col-xs-4 lead">
+	Choose a country
+	<select class="form-control"
+		ng-model="countryId"
+		ng-options="c.code as c.name for c in countries">
+	</select>
+	
+	Choose a city
+	<select class="form-control"
+		ng-model="cityId"
+		ng-options="city.id as city.name for city in cities"
+		ng-disabled="! (cities.length > 0)"><!-- NDLA: Cities is safely refreshed when country changes -->
+	</select>
+	
+	<button type="button" class="btn btn-link btn-sm"
+		ng-show="cityId"
+		ng-click="toggleMode()">{{(forecastMode)?'Current weather':'Next 48h forecast'}}</button>
+</div>
+<div class="col-xs-6" ng-show="cityId" ng-include="weatherView">
+</div>

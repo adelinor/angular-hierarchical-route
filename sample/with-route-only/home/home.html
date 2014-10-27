@@ -1,0 +1,59 @@
+<div class="page-header">
+	<h1>{{(forecastMode)?'Weather forecast':'Current weather'}}</h1>
+</div>
+<p class="lead">
+	All weather information is kindly enabled by the
+	<a href="http://openweathermap.org/current">Open weather API</a>
+</p>
+<div class="col-xs-4 lead">
+	Choose a country
+	<select class="form-control"
+		ng-model="countryId"
+		ng-options="c.code as c.name for c in countries">
+	</select>
+	
+	Choose a city
+	<select class="form-control"
+		ng-model="cityId"
+		ng-options="city.id as city.name for city in cities"
+		ng-disabled="(! countryId)">
+	</select>
+	
+	<button type="button" class="btn btn-link btn-sm"
+		ng-show="cityId"
+		ng-click="toggleMode()">{{(forecastMode)?'Current weather':'Next 48h forecast'}}</button>
+</div>
+<div class="col-xs-6" ng-show="cityId && (! forecastMode)">
+	<h2>{{forecast.name}}</h2>
+	<div class="row">
+		<div class="col-xs-2">
+			<img ng-src="{{forecast.iconUrl}}">
+		</div>
+		<div class="col-xs-8 lead">
+			<strong>{{forecast.temp| number:1}} &deg;C</strong><br>
+			<span style="text-transform: capitalize;">{{forecast.main}}</span><br>
+			<small>
+			{{forecast.description}} &bull;
+			{{forecast.humidity}}% of humidity
+			</small>
+		</div>
+	</div>
+</div>
+<div class="col-xs-6" ng-show="cityId && forecastMode">
+	<h2>{{forecasts[0].name}}</h2>
+	<div class="row" ng-repeat="forecast in forecasts">
+		<div class="col-xs-4">
+		{{forecast.date | date:'EEE HH:mm'}}
+		</div>
+		<div class="col-xs-2">
+			<img ng-src="{{forecast.iconUrl}}">
+		</div>
+		<div class="col-xs-6">
+			<strong>{{forecast.temp| number:1}} &deg;C</strong>
+			<span style="text-transform: capitalize;">{{forecast.main}}</span><br>
+			<small>
+			{{forecast.description}}
+			</small>
+		</div>
+	</div>
+</div>
