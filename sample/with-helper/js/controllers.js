@@ -6,8 +6,8 @@ angular.module('sample.controllers',[])
 	};
 
 }])
-.controller('HomeCtrl', ['$scope', 'weatherService', 'resolved', 'routeCalled',
-                         function($scope, weatherService, resolved, routeCalled) {
+.controller('HomeCtrl', ['$scope', 'weatherService', 'resolved', 'constants', 'routeCalled',
+                         function($scope, weatherService, resolved, constants, routeCalled) {
 	//NDLA: with pure ng-route, you need to inject all the resolved objects and
 	//      route contextual information: countries, cities, $route, $location
 	
@@ -16,6 +16,7 @@ angular.module('sample.controllers',[])
 	$scope.cities = resolved.cities; //NDLA: this will be undefined in some cases
 	$scope.forecast = resolved.currentWeather;
 	$scope.forecasts = resolved.forecastWeather;
+	$scope.weatherView = constants.weatherView;
 
 	//Set scope data bound to route parameters
 	$scope.countryId = routeCalled.$routeParams.countryId;

@@ -48,6 +48,7 @@ angular.module('sample.routes', ['ngRoute', 'angularHierarchicalRoute'])
 				return undefined;
 			}]
 		})
+		.constants({weatherView: 'home/current-weather.html'})
 	.callableFrom('/home/:countryId/:cityId/forecast','forecast')
 		.resolve({
 			countries: annotatedFnCountries,
@@ -60,6 +61,7 @@ angular.module('sample.routes', ['ngRoute', 'angularHierarchicalRoute'])
 				return undefined;
 			}]
 		})
+		.constants({weatherView: 'home/forecast-weather.html'})
 	.registerWith($routeProvider);
 
 	$routeProvider.when('/admin', {templateUrl: '../common/admin/admin.html', controller: 'AdminCityCtrl'});

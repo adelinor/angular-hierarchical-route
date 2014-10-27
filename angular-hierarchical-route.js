@@ -116,6 +116,14 @@ function HierarchyProvider() {
 			return $q.all(toResolve);
 		};
 	};
+	/**
+	 * Creates a function as the resolve object only accepts functions.
+	 */
+	var createConstants = function(constantsObj) {
+		return function() {
+			return (constantsObj) ? constantsObj : {};
+		};
+	};
 	
 	Hierarchy.prototype = {
 		callableFrom: function(path, logicalName) {
@@ -154,6 +162,11 @@ function HierarchyProvider() {
 			c.resolve = toResolve;
 			return this;
 		},
+		constants: function(constants) {
+			var c = this.callablePaths[this.callablePaths.length - 1];
+			c.constants = constants;
+			return this;
+		},
 		registerWith: function($routeProvider) {
 			for (var j = 0; j < this.callablePaths.length; j++) {
 				var callablePath = this.callablePaths[j];
@@ -162,7 +175,8 @@ function HierarchyProvider() {
 					controller: this.controller,
 					resolve: {
 						routeCalled: callablePath.routeCalled,
-						resolved: createResolver(callablePath.resolve)
+						resolved: createResolver(callablePath.resolve),
+						constants: createConstants(callablePath.constants)
 					}
 				});
 			}
