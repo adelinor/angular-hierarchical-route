@@ -1,36 +1,29 @@
 angular-hierarchical-route
 ==========================
 
-This module is a small complement to `ngRoute` and is of particular benefit when the routes of your application have a hierarchical structure.
+This module complements `ngRoute` and is of particular benefit when the routes of your application have a hierarchical structure.
 
-This project includes two sample applications:
+This project includes two sample applications which do exactly the same thing:
+[read the about section!](http://adelinor.github.io/angular-hierarchical-route/sample/with-helper/#/about)
 
-* An application which uses only `ngRoute`
-* An application which uses `ngRoute` in conjunction with `angular-hierarchical-route`
-  to implement a more advanced routing behavior. *Please note that this sample
-  could also be implemented with plain `ngRoute` with some trade-offs*.
+... but are implemented differently:
+* The [/with-route-only](http://adelinor.github.io/angular-hierarchical-route/sample/with-route-only) sample application uses `ngRoute` without this module
+* The [/with-helper](http://adelinor.github.io/angular-hierarchical-route/sample/with-helper) sample application uses `ngRoute` in conjunction with
+`angular-hierarchical-route` to implement a more advanced routing behavior.
+*Please note that this sample could also be implemented with plain `ngRoute` with some trade-offs*.
 
-How to run samples
-------------------
-To run sample, go to the `/sample` folder and run command:
-
-```sh
-python -m SimpleHTTPServer 8888
-```
-
-Then access the **sample with basic routing** with
- [http://localhost:8888/with-route-only](http://localhost:8888/with-route-only)
-
-Access the **sample with advanced routing** with
- [http://localhost:8888/with-helper](http://localhost:8888/with-helper)
+[Read how to run the sample applications on your local machine](site/RunSampleOnLocalhost)
 
 Background
 ----------
-`ngRoute` with its *ng-view* directive and *$routeProvider* allows to break an
-application into several top level templates and controllers. Hence it helps
-deal with the **complexity** of an application by partitioning into bing chuncks.
+Routing allows a developer to break an application into smaller and more
+manageable chunks.
+`ngRoute` with its *ng-view* directive and *$routeProvider* allows to partition an
+application into several top level templates and controllers, hence help
+dealing with the **complexity**.
 
-Additionally routing provides two benefits for the end user:
+Routing provides two additional benefits for the end user (and for the developer
+who is testing repeatedly his development):
 
 * Allows to **use the browser's _Back_ button** to return back to a previous state
   of the application
