@@ -1,4 +1,4 @@
-[Go back to README!](../README)
+[Go back to README!](../README.md)
 
 How to run sample applications
 ------------------------------

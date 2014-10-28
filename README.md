@@ -3,16 +3,18 @@ angular-hierarchical-route
 
 This module complements `ngRoute` and is of particular benefit when the routes of your application have a hierarchical structure.
 
-This project includes two sample applications which do exactly the same thing:
-[read the about section!](http://adelinor.github.io/angular-hierarchical-route/sample/with-helper/#/about)
+This project includes two sample applications which do exactly the same thing
+[(read the about section!)](http://adelinor.github.io/angular-hierarchical-route/sample/with-helper/#/about) ... but are implemented differently:
 
-... but are implemented differently:
-* The [/with-route-only](http://adelinor.github.io/angular-hierarchical-route/sample/with-route-only) sample application uses `ngRoute` without this module
-* The [/with-helper](http://adelinor.github.io/angular-hierarchical-route/sample/with-helper) sample application uses `ngRoute` in conjunction with
-`angular-hierarchical-route` to implement a more advanced routing behavior.
-*Please note that this sample could also be implemented with plain `ngRoute` with some trade-offs*.
+* The **/with-route-only** sample application
+  [(access live demo!)](http://adelinor.github.io/angular-hierarchical-route/sample/with-route-only)
+  uses `ngRoute` without this module
+* The **/with-helper** sample application
+  [(access live demo!)](http://adelinor.github.io/angular-hierarchical-route/sample/with-helper)
+  uses `ngRoute` in conjunction with `angular-hierarchical-route` to implement a more
+  advanced routing behavior. *Please note that this sample could also be implemented with plain `ngRoute` with some trade-offs*.
 
-[Read how to run the sample applications on your local machine](site/RunSampleOnLocalhost)
+[Read how to run the sample applications on your local machine](site/RunSampleOnLocalhost.md)
 
 Background
 ----------
