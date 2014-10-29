@@ -47,7 +47,7 @@ Some options:
 * If possible, have the complex route as the application and the rest as static pages.
   This approach cannot be applied when other paths require dynamic behavior (for
   instance the
-  [#/admin](http://adelinor.github.io/angular-hierarchical-route/sample/with-route-only#/admin)
+  [#/admin](http://adelinor.github.io/angular-hierarchical-route/sample/with-route-only/#/admin)
   in the sample)
 
 * Create a big directive for the complex route to make it into a sort of mini-application. I personally tried this approach and ended-up with a huge blob module that was going against the AngularJS good practices.
