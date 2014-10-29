@@ -37,20 +37,23 @@ Why did this module come to exist?
 ---------------------------------
 
 ### When a view in an ng-view is itself like a mini-application
-There is typically one route in an application which will have the main functionality
-(for instance the #/home path in the
-[sample application](http://adelinor.github.io/angular-hierarchical-route/sample/with-route-only)).
+Typically one route (or more), in an application, have significant functionality
+(for instance the
+[#/home](http://adelinor.github.io/angular-hierarchical-route/sample/with-route-only)
+in the sample).
 
-Some approaches:
+Some options:
 
 * If possible, have the complex route as the application and the rest as static pages.
   This approach cannot be applied when other paths require dynamic behavior (for
-  instance the #/admin path in the [sample](http://adelinor.github.io/angular-hierarchical-route/sample/with-route-only))
+  instance the
+  [#/admin](http://adelinor.github.io/angular-hierarchical-route/sample/with-route-only)
+  in the sample)
 
-* Create a big directive for the complex route to make it into a sort of mini-application. I personally tried this approach and ended-up with a huge blob module
-that did not fit in the AngularJS way.
+* Create a big directive for the complex route to make it into a sort of mini-application. I personally tried this approach and ended-up with a huge blob module that was going against the AngularJS good practices.
 
 * Using routing. With experience this is what best fits with
-the AngularJS way of working. As side benefits you enable the back button
-and allow to deep linking within the application (for instance the
-[#/home/FR/2988507/forecast](http://adelinor.github.io/angular-hierarchical-route/sample/with-helper/#/home/FR/2988507/forecast) in the sample application)
+ the AngularJS way of working. As side benefits you enable the back button
+ and allow to deep linking within the application (for instance the
+ [#/home/FR/2988507/forecast](http://adelinor.github.io/angular-hierarchical-route/sample/with-helper/#/home/FR/2988507/forecast)
+ in the sample)
