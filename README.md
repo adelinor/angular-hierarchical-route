@@ -8,7 +8,7 @@ This project includes two sample applications which do exactly the same thing
 
 * The **/with-route-only** sample application
   [(access live demo!)](http://adelinor.github.io/angular-hierarchical-route/sample/with-route-only)
-  uses `ngRoute` without this module
+  uses `ngRoute` and nothing else
 * The **/with-helper** sample application
   [(access live demo!)](http://adelinor.github.io/angular-hierarchical-route/sample/with-helper)
   uses `ngRoute` in conjunction with `angular-hierarchical-route` to implement a more
