@@ -21,7 +21,7 @@ Background
 Routing allows a developer to break an application into smaller and more
 manageable chunks.
 `ngRoute` with its *ng-view* directive and *$routeProvider* allows to partition an
-application into several top level templates and controllers, hence help
+application into several top level templates and controllers, hence helping
 dealing with the **complexity**.
 
 Routing provides two additional benefits for the end user (and for the developer
