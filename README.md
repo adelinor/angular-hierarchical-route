@@ -37,10 +37,10 @@ Why did this module come to exist?
 ---------------------------------
 
 ### When a view in an ng-view is itself like a mini-application
-Typically one route (or more), in an application, have significant functionality
-(for instance the
+Typically one route (or more), in an application, have significant functionality.
+In the sample, all views are trivial but the
 [#/home](http://adelinor.github.io/angular-hierarchical-route/sample/with-route-only)
-in the sample).
+plays the role of the complex application.
 
 Some options:
 
