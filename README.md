@@ -40,7 +40,7 @@ Why did this module come to exist?
 Typically one route (or more), in an application, have significant functionality.
 In the sample, all views are trivial but the
 [#/home](http://adelinor.github.io/angular-hierarchical-route/sample/with-route-only)
-plays the role of the complex application.
+plays the role of the complex portion in the application.
 
 Some options:
 
