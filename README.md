@@ -50,7 +50,7 @@ Some options:
   [#/admin](http://adelinor.github.io/angular-hierarchical-route/sample/with-route-only/#/admin)
   in the sample)
 
-* Create a big directive for the complex route to make it into a sort of mini-application. I personally tried this approach and ended-up with a huge blob module that was going against the AngularJS good practices.
+* Create a big directive for the complex route to make it into a sort of mini-application. I personally tried this approach and ended-up with a big blob module not very understandable.
 
 * Using routing. With experience this is what best fits with
  the AngularJS way of working. As side benefits you enable the back button
