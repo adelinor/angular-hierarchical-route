@@ -13,5 +13,3 @@ Then access the **sample with basic routing** with
 
 Access the **sample with advanced routing** with
  [http://localhost:8888/with-helper](http://localhost:8888/with-helper)
-
-[< back to README ^](../README.md)
