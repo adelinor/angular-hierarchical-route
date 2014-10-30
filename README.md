@@ -14,7 +14,8 @@ This project includes two sample applications which do exactly the same thing
   uses `ngRoute` in conjunction with `angular-hierarchical-route` to implement a more
   advanced routing behavior. *Please note that this sample could also be implemented with plain `ngRoute` with some trade-offs*.
 
-[Read how to run the sample applications on your local machine](site/RunSampleOnLocalhost.md)
+You can also run the sample applications on
+[your local machine](site/RunSampleOnLocalhost.md)
 
 Background
 ----------
