@@ -58,3 +58,122 @@ Some options:
  and allow to deep linking within the application (for instance the
  [#/home/FR/2988507/forecast](http://adelinor.github.io/angular-hierarchical-route/sample/with-helper/#/home/FR/2988507/forecast)
  in the sample)
+
+How to use it?
+--------------
+
+### Registering simple routes
+Routes for which you do not require sub-states, can be registered with `ngRoute`'s `$routeProvider`:
+
+```js
+$routeProvider.when('/admin', {templateUrl: '../common/admin/admin.html', controller: 'AdminCityCtrl'});
+```
+
+### When needing sub-states for a view in ng-view
+This is when you create a hierarchy of routes. To create a hierachical route with
+the `hierarchyProvider`:
+
+```js
+hierarchyProvider.add({
+	rootPath: '/home',
+	templateUrl: 'home/home.html',
+	controller: 'HomeCtrl'})
+```
+
+... then you need to add all the *callable paths* within that hierarchy (including the root path). For every path you can associate a *logical name*:
+
+```js
+.callableFrom('/home','home')
+	.resolve({
+		countries: annotatedFnCountries
+	})
+.callableFrom('/home/:countryId','country')
+	.resolve({
+		countries: annotatedFnCountries,
+		cities: annotatedFnCities
+	})
+```
+
+... and conclude by *registering* that hierarchy of routes using the `$routeProvider`:
+
+```js
+.registerWith($routeProvider);
+```
+
+### Promises to resolve
+As shown above you can define for every path a map of promises to *resolve*. This map
+of resolved objects will be injected in the controller as an object named `resolved`:
+
+```js
+.controller('HomeCtrl', ['$scope', 'weatherService', 'resolved', 'constants', 'routeCalled',
+                         function($scope, weatherService, resolved, constants, routeCalled) {
+	//Set loaded data in scope
+	$scope.countries = resolved.countries;
+	$scope.cities = resolved.cities;
+
+```
+
+### Constants
+Constants can be attached to a callable path. They will then be injected under
+the name `constants` (see controller definition above).
+
+In the sample application, this is used to define the view name of a nested view:
+
+```js
+.callableFrom('/home/:countryId/:cityId/forecast','forecast')
+	.resolve({
+		// ...
+	})
+	.constants({weatherView: 'home/forecast-weather.html'})
+```
+
+This view is then made visible to view by the controller:
+
+```js
+$scope.weatherView = constants.weatherView;
+```
+
+... and finally included using the `ng-include` directive:
+
+```html
+<div class="col-xs-6" ng-show="cityId" ng-include="weatherView">
+</div>
+```
+
+### Injection of route context
+Another object can be injected in the controller under the name `routeCalled`
+which represents the route context:
+
+* this will include the angular route services as properties: `routeCalled.$location`,
+`routeCalled.$route` and `routeCalled.$routeParams`
+* it provides you with a way to find out weather a route *is active* based on its *logical name*: `routeCalled.isActive('forecast')`
+* a few *goTo* options (as detailed in Navigation section below)
+
+### Navigation
+
+#### Simple Go to
+This is achieved by invoking the `routeCalled.goTo` function:
+
+```js
+routeCalled.goTo('forecast', {countryId: $scope.countryId, cityId: $scope.cityId});
+```
+
+### Go to first route which accepts the provided parameters
+This function allows to find a path, not by its name, but by the *signature* of its
+parameters:
+
+```js
+routeCalled.goToFirstWith({countryId: newId});
+```
+
+### Update current parameters or move on to next
+When a user input bound to a *path parameter* changes, the `routeCalled.updateOrGoToFirstWith` function becomes very useful.
+Typically a parameter changes either because it was `undefined` and now is set, or,
+because its value was updated.
+
+When going from *blank* to a value, this corresponds to a move further down in the
+route. It is otherwise an *update* of the current route parameters:
+
+```js
+routeCalled.updateOrGoToFirstWith({countryId: $scope.countryId, cityId: newId});
+```
