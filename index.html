@@ -34,7 +34,7 @@ The <a href="https://github.com/adelinor/angular-hierarchical-route/blob/master/
 <p><img src="content_img/intro_with_ctrl.png" alt="introduction with controller"></p>
 
 <h3>
-<a id="1-building-routes" class="anchor" href="#1-building-routes" aria-hidden="true"><span class="octicon octicon-link"></span></a>(1) Building routes</h3>
+<a id="1-building-routes" class="anchor" href="#1-building-routes" aria-hidden="true"><span class="octicon octicon-link"></span></a>[1] Building routes</h3>
 
 <p><img src="content_img/route_to_assemble.png" alt="route un-assembled"></p>
 
@@ -47,15 +47,45 @@ The <a href="https://github.com/adelinor/angular-hierarchical-route/blob/master/
 <div class="highlight highlight-js"><pre>angular.module(<span class="pl-s1"><span class="pl-pds">'</span>sample.routes<span class="pl-pds">'</span></span>, [<span class="pl-s1"><span class="pl-pds">'</span>ngRoute<span class="pl-pds">'</span></span>])
 .config([<span class="pl-s1"><span class="pl-pds">'</span>$routeProvider<span class="pl-pds">'</span></span>, <span class="pl-st">function</span>(<span class="pl-vpf">$routeProvider</span>) {
 
-    $routeProvider.when(<span class="pl-s1"><span class="pl-pds">'</span>/home<span class="pl-pds">'</span></span>, {templateUrl<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>home/home.html<span class="pl-pds">'</span></span>, controller<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>HomeCtrl<span class="pl-pds">'</span></span>});
+    $routeProvider.when(<span class="pl-s1"><span class="pl-pds">'</span>/home<span class="pl-pds">'</span></span>, {templateUrl<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>home/home.html<span class="pl-pds">'</span></span>,
+                                  controller<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>HomeCtrl<span class="pl-pds">'</span></span>});
     <span class="pl-c">// ...</span>
 }]);</pre></div>
 
 <p><img src="content_img/route_built.png" alt="route construction"></p>
 
-<p>When you want to associate <em>several routes to a view</em> (displayed with the <code>ng-view</code> directive), you can use this module to create a hierarchical route. A hierarchical route functions as an <em>underground line</em>:</p>
+<p>When you want to associate <strong>several routes to a view</strong> (displayed with the <code>ng-view</code> directive), you can use this module to create a hierarchical route. A hierarchical route functions as an <strong>underground line</strong>:</p>
 
 <p><img src="content_img/underground_line.png" alt="underground line"></p>
+
+<p>A <strong>hierarchical route</strong> as an underground line has places where you can join and stop: like an underground station. As same as a station belongs to an underground line, a route that belongs to a hierarchical route.</p>
+
+<p><img src="content_img/station.png" alt="station called 'choose city'"></p>
+
+<h3>
+<a id="2-defining-hierarchical-routes" class="anchor" href="#2-defining-hierarchical-routes" aria-hidden="true"><span class="octicon octicon-link"></span></a>[2] Defining hierarchical routes</h3>
+
+<p>To define a hierarchical route, you need to inject the <code>hierarchyProvider</code> in the config method of your module:</p>
+
+<div class="highlight highlight-js"><pre>angular.module(<span class="pl-s1"><span class="pl-pds">'</span>sample.routes<span class="pl-pds">'</span></span>, [<span class="pl-s1"><span class="pl-pds">'</span>ngRoute<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>angularHierarchicalRoute<span class="pl-pds">'</span></span>])
+.config([<span class="pl-s1"><span class="pl-pds">'</span>$routeProvider<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>hierarchyProvider<span class="pl-pds">'</span></span>,
+         <span class="pl-st">function</span>(<span class="pl-vpf">$routeProvider</span>, <span class="pl-vpf">hierarchyProvider</span>) {
+
+    hierarchyProvider.<span class="pl-s3">add</span>({
+        rootPath<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>/home<span class="pl-pds">'</span></span>,
+        templateUrl<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>home/home.html<span class="pl-pds">'</span></span>,
+        controller<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>HomeCtrl<span class="pl-pds">'</span></span>})
+    .callableFrom(<span class="pl-s1"><span class="pl-pds">'</span>/home<span class="pl-pds">'</span></span>,<span class="pl-s1"><span class="pl-pds">'</span>home<span class="pl-pds">'</span></span>)
+    .callableFrom(<span class="pl-s1"><span class="pl-pds">'</span>/home/:countryId<span class="pl-pds">'</span></span>,<span class="pl-s1"><span class="pl-pds">'</span>choose city<span class="pl-pds">'</span></span>)
+    <span class="pl-c">// ... </span>
+    .registerWith($routeProvider);</pre></div>
+
+<p>All routes in the hierarchy share the same view and controller. The <code>rootPath</code> must be one of the routes in your hierarchy and is the default entry point to your view.
+Finally you register your hierarchical route with <code>$routeProvider</code> .</p>
+
+<p>When all your routes are created, your application can start receiving users.</p>
+
+<p><img src="content_img/users_en_route.png" alt="users on your route"></p>
 
 <h3>
 <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
