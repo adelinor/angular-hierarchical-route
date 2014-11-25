@@ -28,11 +28,34 @@
     <div id="content-wrapper">
       <div class="inner clearfix">
         <section id="main-content">
-          <h3>
-<a id="content" class="anchor" href="#content" aria-hidden="true"><span class="octicon octicon-link"></span></a>Content</h3>
+          <p>This is an illustrated introduction to the <code>angular-hierarchical-route</code> module which purpose is to help you build and use routes in your AngularJS app.
+The <a href="https://github.com/adelinor/angular-hierarchical-route/blob/master/README.md">README file</a> provides a more succinct version of this content.</p>
 
-<p>This is an introduction to the angular-hierarchical-route module which purpose is to help you build and use routes in your app.
-You can find in the <a href="https://github.com/adelinor/angular-hierarchical-route/blob/master/README.md">README file</a>, a more succinct version of this content.</p>
+<p><img src="content_img/intro_with_ctrl.png" alt="introduction with controller"></p>
+
+<h3>
+<a id="1-building-routes" class="anchor" href="#1-building-routes" aria-hidden="true"><span class="octicon octicon-link"></span></a>(1) Building routes</h3>
+
+<p><img src="content_img/route_to_assemble.png" alt="route un-assembled"></p>
+
+<p>Before the app starts offering its services to the users, the route gets assembled ...</p>
+
+<p><img src="content_img/route_construction.png" alt="route construction"></p>
+
+<p>... with the <code>$routeProvider</code> of <code>ngRoute</code> when configuring your application AngularJS module:</p>
+
+<div class="highlight highlight-js"><pre>angular.module(<span class="pl-s1"><span class="pl-pds">'</span>sample.routes<span class="pl-pds">'</span></span>, [<span class="pl-s1"><span class="pl-pds">'</span>ngRoute<span class="pl-pds">'</span></span>])
+.config([<span class="pl-s1"><span class="pl-pds">'</span>$routeProvider<span class="pl-pds">'</span></span>, <span class="pl-st">function</span>(<span class="pl-vpf">$routeProvider</span>) {
+
+    $routeProvider.when(<span class="pl-s1"><span class="pl-pds">'</span>/home<span class="pl-pds">'</span></span>, {templateUrl<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>home/home.html<span class="pl-pds">'</span></span>, controller<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>HomeCtrl<span class="pl-pds">'</span></span>});
+    <span class="pl-c">// ...</span>
+}]);</pre></div>
+
+<p><img src="content_img/route_built.png" alt="route construction"></p>
+
+<p>When you want to associate <em>several routes to a view</em> (displayed with the <code>ng-view</code> directive), you can use this module to create a hierarchical route. A hierarchical route functions as an <em>underground line</em>:</p>
+
+<p><img src="content_img/underground_line.png" alt="underground line"></p>
 
 <h3>
 <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
