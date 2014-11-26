@@ -33,8 +33,8 @@ The <a href="https://github.com/adelinor/angular-hierarchical-route/blob/master/
 
 <p><img src="content_img/intro_with_ctrl.png" alt="introduction with controller"></p>
 
-<h3>
-<a id="1-building-routes" class="anchor" href="#1-building-routes" aria-hidden="true"><span class="octicon octicon-link"></span></a>[1] Building routes</h3>
+<h1>
+<a id="1-building-routes" class="anchor" href="#1-building-routes" aria-hidden="true"><span class="octicon octicon-link"></span></a>[1] Building routes</h1>
 
 <p><img src="content_img/route_to_assemble.png" alt="route un-assembled"></p>
 
@@ -125,6 +125,80 @@ Finally you register your hierarchical route with <code>$routeProvider</code> .<
     <span class="pl-st">function</span>(<span class="pl-vpf">adminService</span>, <span class="pl-vpf">$route</span>) {
         <span class="pl-k">return</span> adminService.citiesForCountry($route.<span class="pl-sc">current</span>.params.countryId);
     }];</pre></div>
+
+<h3>
+<a id="4-route-guidance" class="anchor" href="#4-route-guidance" aria-hidden="true"><span class="octicon octicon-link"></span></a>[4] Route guidance</h3>
+
+<p>The <strong>controller</strong> also gets provided a <code>routeCalled</code> object which acts as a guidance leaflet to:</p>
+
+<ul>
+<li>know where you are</li>
+<li>access ngRoute's services: <code>$route</code>, <code>$location</code> and <code>$routeParams</code>
+</li>
+<li>navigate to other stations in the line</li>
+</ul>
+
+<p><img src="content_img/ctrl_route_called.png" alt="routeCalled to controller"></p>
+
+<h3>
+<a id="5-view-constants" class="anchor" href="#5-view-constants" aria-hidden="true"><span class="octicon octicon-link"></span></a>[5] View constants</h3>
+
+<p>Similar to the promises to resolve, your can define constants that will be passed to the <strong>controller</strong> when a user is at your station.</p>
+
+<p>For example:</p>
+
+<div class="highlight highlight-js"><pre>.callableFrom(<span class="pl-s1"><span class="pl-pds">'</span>/home/:countryId/:cityId<span class="pl-pds">'</span></span>,<span class="pl-s1"><span class="pl-pds">'</span>current<span class="pl-pds">'</span></span>)
+    .constants({weatherView<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>home/current-weather.html<span class="pl-pds">'</span></span>})</pre></div>
+
+<p>is made available to the controller under the name <code>constants</code>:</p>
+
+<div class="highlight highlight-js"><pre>.controller(<span class="pl-s1"><span class="pl-pds">'</span>HomeCtrl<span class="pl-pds">'</span></span>, [<span class="pl-s1"><span class="pl-pds">'</span>$scope<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>constants<span class="pl-pds">'</span></span>,
+                         <span class="pl-st">function</span>(<span class="pl-vpf">$scope</span>, <span class="pl-vpf">constants</span>) {
+    <span class="pl-c">//...</span>
+    $scope.weatherView <span class="pl-k">=</span> constants.weatherView;
+    <span class="pl-c">//...</span>
+}])</pre></div>
+
+<p>This mechanism allows to include sub-views with the directive <code>ng-include='*constant*'</code>. This reduces the number of elements in your view that are shown or hidden: <code>ng-show=*toggle*</code>, which as a consequence makes your view more readable.</p>
+
+<p>For instance, what would be in one view as:</p>
+
+<div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s1"><span class="pl-pds">"</span>col-xs-6<span class="pl-pds">"</span></span> <span class="pl-e">ng-show</span>=<span class="pl-s1"><span class="pl-pds">"</span>cityId <span class="pl-ii">&amp;&amp;</span> (! forecastMode)<span class="pl-pds">"</span></span>&gt;
+    <span class="pl-c">&lt;!-- view content ...--&gt;</span>
+&lt;/<span class="pl-ent">div</span>&gt;
+&lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s1"><span class="pl-pds">"</span>col-xs-6<span class="pl-pds">"</span></span> <span class="pl-e">ng-show</span>=<span class="pl-s1"><span class="pl-pds">"</span>cityId <span class="pl-ii">&amp;&amp;</span> forecastMode<span class="pl-pds">"</span></span>&gt;
+    <span class="pl-c">&lt;!-- view content ...--&gt;</span>
+&lt;/<span class="pl-ent">div</span>&gt;  </pre></div>
+
+<p>can now be written as:</p>
+
+<div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s1"><span class="pl-pds">"</span>col-xs-6<span class="pl-pds">"</span></span> <span class="pl-e">ng-show</span>=<span class="pl-s1"><span class="pl-pds">"</span>cityId<span class="pl-pds">"</span></span> <span class="pl-e">ng-include</span>=<span class="pl-s1"><span class="pl-pds">"</span>weatherView<span class="pl-pds">"</span></span>&gt;</pre></div>
+
+<h3>
+<a id="6-navigation" class="anchor" href="#6-navigation" aria-hidden="true"><span class="octicon octicon-link"></span></a>[6] Navigation</h3>
+
+<p><strong>Go to by name</strong>
+This is about going to a station in an underground line by knowing the station name. You invoke the routeCalled.goTo function:</p>
+
+<div class="highlight highlight-js"><pre>routeCalled.goTo(<span class="pl-s1"><span class="pl-pds">'</span>choose city<span class="pl-pds">'</span></span>, params);</pre></div>
+
+<p><strong>Go to by parameter signature</strong>
+As well as you could describe an underground station by its characteristics: "a station with green walls and yellow ceiling", here you identify a station by the keys that are used in the route definition. For instance:</p>
+
+<div class="highlight highlight-js"><pre>routeCalled.goToFirstWith({countryId<span class="pl-k">:</span> value});</pre></div>
+
+<p>would stop at the first callable route within this hierarchical route which has <code>:countryId</code> as a key in the route and nothing else.</p>
+
+<p><strong>Update current parameters or go to by parameter signature</strong>
+If the user updates the content an existing route parameter, the <code>routeCalled.updateOrGoToFirstWith</code> function will stay on the same view but updated parameters.</p>
+
+<p>When new parameter is added, the <code>routeCalled.updateOrGoToFirstWith</code> function will search for a callable for this new set of parameter keys. In this case this works as the routeCalled.goToFirstWith function.</p>
+
+<div class="highlight highlight-js"><pre>routeCalled.updateOrGoToFirstWith({countryId<span class="pl-k">:</span> value, cityId<span class="pl-k">:</span> newValue});</pre></div>
+
+<p><img src="content_img/thankyoubye.png" alt="Thank you and bye"></p>
+
+<p>Thank your for your attention.</p>
 
 <h3>
 <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
