@@ -44,13 +44,17 @@ The <a href="https://github.com/adelinor/angular-hierarchical-route/blob/master/
 
 <p>... with the <code>$routeProvider</code> of <code>ngRoute</code> when configuring your application AngularJS module:</p>
 
-<div class="highlight highlight-js"><pre>angular.module(<span class="pl-s1"><span class="pl-pds">'</span>sample.routes<span class="pl-pds">'</span></span>, [<span class="pl-s1"><span class="pl-pds">'</span>ngRoute<span class="pl-pds">'</span></span>])
-.config([<span class="pl-s1"><span class="pl-pds">'</span>$routeProvider<span class="pl-pds">'</span></span>, <span class="pl-st">function</span>(<span class="pl-vpf">$routeProvider</span>) {
+<p>{% highlight javascript %}
+angular.module('sample.routes', ['ngRoute'])
+.config(['$routeProvider', function($routeProvider) {</p>
 
-    $routeProvider.when(<span class="pl-s1"><span class="pl-pds">'</span>/home<span class="pl-pds">'</span></span>, {templateUrl<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>home/home.html<span class="pl-pds">'</span></span>,
-                                  controller<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>HomeCtrl<span class="pl-pds">'</span></span>});
-    <span class="pl-c">// ...</span>
-}]);</pre></div>
+<pre><code>$routeProvider.when('/home', {templateUrl: 'home/home.html',
+                              controller: 'HomeCtrl'});
+// ...
+</code></pre>
+
+<p>}]);
+{% endhighlight %}</p>
 
 <p><img src="content_img/route_built.png" alt="route construction"></p>
 
