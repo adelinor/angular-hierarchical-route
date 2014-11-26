@@ -44,17 +44,13 @@ The <a href="https://github.com/adelinor/angular-hierarchical-route/blob/master/
 
 <p>... with the <code>$routeProvider</code> of <code>ngRoute</code> when configuring your application AngularJS module:</p>
 
-<p>{% highlight javascript %}
-angular.module('sample.routes', ['ngRoute'])
-.config(['$routeProvider', function($routeProvider) {</p>
+<div class="highlight highlight-js"><pre>angular.module(<span class="pl-s1"><span class="pl-pds">'</span>sample.routes<span class="pl-pds">'</span></span>, [<span class="pl-s1"><span class="pl-pds">'</span>ngRoute<span class="pl-pds">'</span></span>])
+.config([<span class="pl-s1"><span class="pl-pds">'</span>$routeProvider<span class="pl-pds">'</span></span>, <span class="pl-st">function</span>(<span class="pl-vpf">$routeProvider</span>) {
 
-<pre><code>$routeProvider.when('/home', {templateUrl: 'home/home.html',
-                              controller: 'HomeCtrl'});
-// ...
-</code></pre>
-
-<p>}]);
-{% endhighlight %}</p>
+    $routeProvider.when(<span class="pl-s1"><span class="pl-pds">'</span>/home<span class="pl-pds">'</span></span>, {templateUrl<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>home/home.html<span class="pl-pds">'</span></span>,
+                                  controller<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>HomeCtrl<span class="pl-pds">'</span></span>});
+    <span class="pl-c">// ...</span>
+}]);</pre></div>
 
 <p><img src="content_img/route_built.png" alt="route construction"></p>
 
@@ -90,6 +86,45 @@ Finally you register your hierarchical route with <code>$routeProvider</code> .<
 <p>When all your routes are created, your application can start receiving users.</p>
 
 <p><img src="content_img/users_en_route.png" alt="users on your route"></p>
+
+<h3>
+<a id="3-users-on-your-route" class="anchor" href="#3-users-on-your-route" aria-hidden="true"><span class="octicon octicon-link"></span></a>[3] Users on your route</h3>
+
+<p>Users (the vehicle on the photo) will be taking the routes defined in your app. When the route they are on corresponds to a <code>callable</code> route (a station), the <strong>controller</strong> will be provided with a resolved object:</p>
+
+<div class="highlight highlight-js"><pre>.controller(<span class="pl-s1"><span class="pl-pds">'</span>HomeCtrl<span class="pl-pds">'</span></span>, [<span class="pl-s1"><span class="pl-pds">'</span>$scope<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>resolved<span class="pl-pds">'</span></span>,
+                         <span class="pl-st">function</span>(<span class="pl-vpf">$scope</span>, <span class="pl-vpf">resolved</span>) {
+    <span class="pl-c">//Set loaded data in scope</span>
+    $scope.countries <span class="pl-k">=</span> resolved.countries;
+    $scope.cities <span class="pl-k">=</span> resolved.cities;
+
+    <span class="pl-c">//...</span>
+}])</pre></div>
+
+<p>This object is a map of the data to resolve.</p>
+
+<p><img src="content_img/ctrl_resolved.png" alt="Controller receives resolved"></p>
+
+<p>The data to resolve is defined when creating the callable route:
+<img src="content_img/resolved_open.png" alt="What's in resolved?"></p>
+
+<div class="highlight highlight-js"><pre>.callableFrom(<span class="pl-s1"><span class="pl-pds">'</span>/home/:countryId<span class="pl-pds">'</span></span>,<span class="pl-s1"><span class="pl-pds">'</span>choose city<span class="pl-pds">'</span></span>)
+    .resolve({
+        countries<span class="pl-k">:</span> annotatedFnCountries,
+        cities<span class="pl-k">:</span> annotatedFnCities
+    })</pre></div>
+
+<p>where <code>annotatedFnCountries</code> and <code>annotatedFnCities</code> are functions returning promises with annotations to inject dependencies:</p>
+
+<div class="highlight highlight-js"><pre><span class="pl-s">var</span> annotatedFnCountries <span class="pl-k">=</span> [<span class="pl-s1"><span class="pl-pds">'</span>adminService<span class="pl-pds">'</span></span>,
+    <span class="pl-st">function</span>(<span class="pl-vpf">adminService</span>) {
+        <span class="pl-k">return</span> adminService.countries();
+    }];
+
+<span class="pl-s">var</span> annotatedFnCities <span class="pl-k">=</span> [<span class="pl-s1"><span class="pl-pds">'</span>adminService<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>$route<span class="pl-pds">'</span></span>,
+    <span class="pl-st">function</span>(<span class="pl-vpf">adminService</span>, <span class="pl-vpf">$route</span>) {
+        <span class="pl-k">return</span> adminService.citiesForCountry($route.<span class="pl-sc">current</span>.params.countryId);
+    }];</pre></div>
 
 <h3>
 <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
