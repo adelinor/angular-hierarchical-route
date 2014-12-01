@@ -8,7 +8,6 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-    <link rel="stylesheet" type="text/css" href="custom-pygment_trac.css" media="screen">
 
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -37,8 +36,6 @@ The <a href="https://github.com/adelinor/angular-hierarchical-route/blob/master/
 <h3>
 <a id="1-building-routes" class="anchor" href="#1-building-routes" aria-hidden="true"><span class="octicon octicon-link"></span></a>[1] Building routes</h3>
 
-<p><img src="content_img/route_to_assemble.png" alt="route un-assembled"></p>
-
 <p>Before the app starts offering its services to the users, the route gets assembled ...</p>
 
 <p><img src="content_img/route_construction.png" alt="route construction"></p>
@@ -53,8 +50,6 @@ The <a href="https://github.com/adelinor/angular-hierarchical-route/blob/master/
     <span class="pl-c">// ...</span>
 }]);</pre></div>
 
-<p><img src="content_img/route_built.png" alt="route construction"></p>
-
 <p>When you want to associate <strong>several routes to a view</strong> (displayed with the <code>ng-view</code> directive), you can use this module to create a hierarchical route. A <strong>hierarchical route</strong> functions like an <strong>underground line</strong>:</p>
 
 <p><img src="content_img/underground_line.png" alt="underground line"></p>
@@ -62,8 +57,6 @@ The <a href="https://github.com/adelinor/angular-hierarchical-route/blob/master/
 <p>It has places where you can join and stop: similar to the <strong>stations</strong> of an underground line.
 This metaphor also applies to the relationship between a <em>hierarchical route</em> and a <em>route</em>: a route
 belongs to a hierarchical route in the same way as a station belongs to an underground line.</p>
-
-<p><img src="content_img/station.png" alt="station called 'choose city'"></p>
 
 <h3>
 <a id="2-defining-hierarchical-routes" class="anchor" href="#2-defining-hierarchical-routes" aria-hidden="true"><span class="octicon octicon-link"></span></a>[2] Defining hierarchical routes</h3>
@@ -82,6 +75,8 @@ belongs to a hierarchical route in the same way as a station belongs to an under
     .callableFrom(<span class="pl-s1"><span class="pl-pds">'</span>/home/:countryId<span class="pl-pds">'</span></span>,<span class="pl-s1"><span class="pl-pds">'</span>choose city<span class="pl-pds">'</span></span>)
     <span class="pl-c">// ... </span>
     .registerWith($routeProvider);</pre></div>
+
+<p><img src="content_img/station.png" alt="station called 'choose city'"></p>
 
 <p>All routes in the hierarchy share the same view and controller. The <code>rootPath</code> must be one of the routes in your hierarchy and is the default entry point to your view.
 Finally you register your hierarchical route with <code>$routeProvider</code> .</p>
