@@ -1,5 +1,5 @@
-angular-hierarchical-route
-==========================
+[angular-hierarchical-route](http://adelinor.github.io/angular-hierarchical-route/)
+============================
 
 This module complements `ngRoute` and is of particular benefit when the routes of your application have a hierarchical structure.
 
