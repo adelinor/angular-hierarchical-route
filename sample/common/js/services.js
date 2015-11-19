@@ -405,7 +405,7 @@ angular.module('sample.services',[])
 		citiesForCountry: citiesForCountryFn
 	};	
 }])
-.service('weatherService', ['$http', function($http) {
+.service('weatherService', ['$http', 'weatherAPI', function($http, weatherAPI) {
 
 	var toWeatherItem = function(data) {
 		var dt = (data.dt_txt)?data.dt_txt.replace(' ','T'):undefined;
@@ -430,7 +430,7 @@ angular.module('sample.services',[])
 	};
 
 	var forecastFn = function(cityId) {
-		return $http.get(weatherAPI.forecastUrl',
+		return $http.get(weatherAPI.forecastUrl,
 				{params: {id: cityId,
 		                  APPID: weatherAPI.key}})
 		.then(function(httpResponse) {
