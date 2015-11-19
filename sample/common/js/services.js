@@ -4,10 +4,13 @@
  * http://arunisrael.com/2013/08/25/accessing-external-apis-with-angularjs.html
  */
 angular.module('sample.services',[])
-.service('adminService', ['$http', '$q', function($http, $q) {
+.constant('weatherAPI', {
+		url: 'http://api.openweathermap.org/data/2.5/weather',
+		forecastUrl: 'http://api.openweathermap.org/data/2.5/forecast',
+		key: 'b1fd36a98f2f1ed2d72cdd1c6ff5ed76'
+	})
+.service('adminService', ['$http', '$q', 'weatherAPI', function($http, $q, weatherAPI) {
 
-	var apiKey = 'b1fd36a98f2f1ed2d72cdd1c6ff5ed76';
-	
 	var countries = [
 		{code: "AD", name: "Andorra"},
 		{code: "AE", name: "United Arab Emirates"},
@@ -278,9 +281,9 @@ angular.module('sample.services',[])
 	 * or undefined
 	 */
 	var findCityByNameFn = function(name, countryCode) {
-		return $http.get('http://api.openweathermap.org/data/2.5/weather',
+		return $http.get(weatherAPI.url,
 				{params: {q: name + ',' + countryCode,
-		                  APPID: apiKey}})
+		                  APPID: weatherAPI.key}})
 		.then(function(httpResponse) {
 			var result = undefined;
 
@@ -418,18 +421,18 @@ angular.module('sample.services',[])
 	};
 
 	var currentFn = function(cityId) {
-		return $http.get('http://api.openweathermap.org/data/2.5/weather',
+		return $http.get(weatherAPI.url,
 				{params: {id: cityId,
-		                  APPID: apiKey}})
+		                  APPID: weatherAPI.key}})
 		.then(function(httpResponse) {
 			return toWeatherItem(httpResponse.data);	
 		});
 	};
 
 	var forecastFn = function(cityId) {
-		return $http.get('http://api.openweathermap.org/data/2.5/forecast',
+		return $http.get(weatherAPI.forecastUrl',
 				{params: {id: cityId,
-		                  APPID: apiKey}})
+		                  APPID: weatherAPI.key}})
 		.then(function(httpResponse) {
 			var result; result = [];
 			var data = httpResponse.data.list;
