@@ -5,6 +5,8 @@
  */
 angular.module('sample.services',[])
 .service('adminService', ['$http', '$q', function($http, $q) {
+
+	var apiKey = 'b1fd36a98f2f1ed2d72cdd1c6ff5ed76';
 	
 	var countries = [
 		{code: "AD", name: "Andorra"},
@@ -278,7 +280,7 @@ angular.module('sample.services',[])
 	var findCityByNameFn = function(name, countryCode) {
 		return $http.get('http://api.openweathermap.org/data/2.5/weather',
 				{params: {q: name + ',' + countryCode,
-		                  APPID: b1fd36a98f2f1ed2d72cdd1c6ff5ed76}})
+		                  APPID: apiKey}})
 		.then(function(httpResponse) {
 			var result = undefined;
 
@@ -418,7 +420,7 @@ angular.module('sample.services',[])
 	var currentFn = function(cityId) {
 		return $http.get('http://api.openweathermap.org/data/2.5/weather',
 				{params: {id: cityId,
-		                  APPID: b1fd36a98f2f1ed2d72cdd1c6ff5ed76}})
+		                  APPID: apiKey}})
 		.then(function(httpResponse) {
 			return toWeatherItem(httpResponse.data);	
 		});
@@ -427,7 +429,7 @@ angular.module('sample.services',[])
 	var forecastFn = function(cityId) {
 		return $http.get('http://api.openweathermap.org/data/2.5/forecast',
 				{params: {id: cityId,
-		                  APPID: b1fd36a98f2f1ed2d72cdd1c6ff5ed76}})
+		                  APPID: apiKey}})
 		.then(function(httpResponse) {
 			var result; result = [];
 			var data = httpResponse.data.list;
